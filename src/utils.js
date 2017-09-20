@@ -1,9 +1,9 @@
-export const geocodeByAddress = (address, callback) => {
+export const geocodeByAddress = (geocoderRequest, callback) => {
   const geocoder = new google.maps.Geocoder()
   const OK = google.maps.GeocoderStatus.OK
 
   return new Promise((resolve, reject) => {
-    geocoder.geocode({ address }, (results, status) => {
+    geocoder.geocode(geocoderRequest, (results, status) => {
       if (status !== OK) {
 
         // TODO: Remove callback support in the next major version.

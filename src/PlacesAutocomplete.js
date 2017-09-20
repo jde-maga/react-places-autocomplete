@@ -47,6 +47,7 @@ class PlacesAutocomplete extends Component {
       secondaryText: structured_formatting.secondary_text,
     })
 
+    this.props.firstPrediction(predictions[0]);
     const { highlightFirstSuggestion } = this.props
 
     this.setState({
@@ -273,18 +274,6 @@ class PlacesAutocomplete extends Component {
                 {this.props.autocompleteItem({ suggestion: p.suggestion, formattedSuggestion: p.formattedSuggestion })}
               </div>
             ))}
-            {this.props.googleLogo && (
-              <div
-                id="PlacesAutocomplete__google-logo"
-                style={this.inlineStyleFor('googleLogoContainer')}
-                className={this.classNameFor('googleLogoContainer')}>
-                <img
-                  src={require(`./images/powered_by_google_${this.props.googleLogoType}.png`)}
-                  style={this.inlineStyleFor('googleLogoImage')}
-                  className={this.classNameFor('googleLogoImage')}
-                />
-              </div>)
-            }
           </div>
         )}
       </div>
@@ -338,21 +327,19 @@ PlacesAutocomplete.propTypes = {
   }),
   debounce: PropTypes.number,
   highlightFirstSuggestion: PropTypes.bool,
-  googleLogo: PropTypes.bool,
-  googleLogoType: PropTypes.oneOf(["default", "inverse"]),
+  firstPrediction: PropTypes.func,
 }
 
 PlacesAutocomplete.defaultProps = {
   clearItemsOnError: false,
   onError: (status) => console.error('[react-places-autocomplete]: error happened when fetching data from Google Maps API.\nPlease check the docs here (https://developers.google.com/maps/documentation/javascript/places#place_details_responses)\nStatus: ', status),
+  firstPrediction: () => {},
   classNames: {},
   autocompleteItem: ({ suggestion }) => (<div>{suggestion}</div>),
   styles: {},
   options: {},
   debounce: 200,
   highlightFirstSuggestion: false,
-  googleLogo: true,
-  googleLogoType: 'default',
 }
 
 export default PlacesAutocomplete
