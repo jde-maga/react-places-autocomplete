@@ -47,8 +47,9 @@ class PlacesAutocomplete extends Component {
       secondaryText: structured_formatting.secondary_text,
     })
 
-    const { highlightFirstSuggestion } = this.props
+    const { highlightFirstSuggestion, firstPrediction } = this.props;
 
+    firstPrediction(predictions[0]);
     this.setState({
       autocompleteItems: predictions.map((p, idx) => ({
         suggestion: p.description,
@@ -340,6 +341,7 @@ PlacesAutocomplete.propTypes = {
   highlightFirstSuggestion: PropTypes.bool,
   googleLogo: PropTypes.bool,
   googleLogoType: PropTypes.oneOf(["default", "inverse"]),
+  firstPrediction: PropTypes.func,
 }
 
 PlacesAutocomplete.defaultProps = {
@@ -347,6 +349,7 @@ PlacesAutocomplete.defaultProps = {
   onError: (status) => console.error('[react-places-autocomplete]: error happened when fetching data from Google Maps API.\nPlease check the docs here (https://developers.google.com/maps/documentation/javascript/places#place_details_responses)\nStatus: ', status),
   classNames: {},
   autocompleteItem: ({ suggestion }) => (<div>{suggestion}</div>),
+  firstPrediction: () => {},  
   styles: {},
   options: {},
   debounce: 200,
